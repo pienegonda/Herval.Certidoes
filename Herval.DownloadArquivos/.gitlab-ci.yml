@@ -1,0 +1,187 @@
+stages:
+  - build
+  - test
+  - staging
+  - production
+
+image: mcr.microsoft.com/dotnet/sdk:9.0
+
+variables:
+  file_stop_path: "AppOff"
+  remote_path_stop: "StaticDevel/manutencao"
+  solution_prefix: "Herval.DownloadArquivos"
+  project_path: "src/$solution_prefix.$project_name"
+  publish_path: "bin/Release"
+
+build_api:
+  stage: build
+  tags:
+    - Runner
+  variables:
+    project_name: "Api"
+
+  script:
+    - "cd $project_path"
+    - "dotnet build --source $NUGET_HERVAL_URL --source $NUGET_URL"
+  only:
+    changes:
+      - src/**/*
+
+build_robo:
+  stage: build
+  tags:
+    - runner
+  variables:
+    project_name: "Robo"
+  script:
+    - "cd $project_path"
+    - "dotnet build --source $NUGET_HERVAL_URL --source $NUGET_URL"
+  only:
+    changes:
+      - src/**/*
+
+
+domain_tests:
+  stage: test
+  tags:
+    - runner
+  variables:
+    project_name: "$solution_prefix.Domain.Tests"
+  script:
+    - "cd tests/$project_name"
+    - "dotnet build --source $NUGET_HERVAL_URL --source $NUGET_URL"
+    - "dotnet test"
+  only:
+    changes:
+      - src/**/*
+      - tests/**/*
+
+staging_api:
+  stage: staging
+  tags:
+    - runner
+  variables:
+    project_name: "Api"
+    remote_path: ""
+
+  before_script:
+    - "apt-get update -qq && apt-get install -y -qq lftp"
+    - mkdir $file_stop_path
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00 -e "mirror --verbose $remote_path_stop $file_stop_path  ; quit"
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00 -e "mirror --verbose -R -p $file_stop_path $remote_path ; quit"
+
+  script:
+    - "cd $project_path"
+    - "dotnet publish -c Release -o $publish_path --source $NUGET_HERVAL_URL --source $NUGET_URL --runtime win-x64 --self-contained"
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00 -e "mirror -v -R -p $publish_path $remote_path ; quit"
+
+  after_script:
+    - lftp -e "cd $remote_path && rm -f app_offline.htm" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00
+
+  environment:
+    name: staging
+    url: https://hml-api.herval.com.br/xyz/xyz
+
+
+staging_robo:
+  stage: staging
+  tags:
+    - runner
+  variables:
+    project_name: "Robo"
+    remote_path: ""
+  only:
+    refs:
+      - staging
+    changes:
+      - src/**/*
+
+  script:
+    - "cd $project_path"
+    - "dotnet publish -c Release -o $publish_path --source $NUGET_HERVAL_URL --source $NUGET_URL --runtime win-x64 --self-contained"
+    - "apt-get update -qq && apt-get install -y -qq lftp"
+    - lftp -e "cd $remote_path" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000 -e "mirror -v -R -p $publish_path $remote_path ; quit"
+  environment:
+    name: staging
+
+
+production_api:
+  stage: production
+  tags:
+    - runner
+  variables:
+    project_name: "Api"
+    remote_path: ""
+  
+  when: manual
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*
+
+  before_script:
+    - "apt-get update -qq && apt-get install -y -qq lftp"
+    - mkdir $file_stop_path
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000 -e "mirror --verbose $remote_path_stop $file_stop_path  ; quit"
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000 -e "mirror --verbose -R -p $file_stop_path $remote_path ; quit"
+
+  script:
+    - "cd $project_path"
+    - "dotnet publish -c Release -o $publish_path --source $NUGET_HERVAL_URL --source $NUGET_URL --runtime win-x64 --self-contained"
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000 -e "mirror -v -R -p $publish_path $remote_path ; quit"
+
+  after_script:
+    - lftp -e "cd $remote_path && rm -f app_offline.htm" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER000
+
+  environment:
+    name: production
+    url: https://api.herval.com.br/xyz/xyz
+
+
+production_robo:
+  stage: production
+  tags:
+    - runner
+  variables:
+    project_name: "Robo"
+    remote_path: ""  
+  when: manual
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*
+
+  script:
+    - "cd $project_path"
+    - "dotnet publish -c Release -o $publish_path --source $NUGET_HERVAL_URL --source $NUGET_URL --runtime win-x64 --self-contained"
+    - "apt-get update -qq && apt-get install -y -qq lftp"
+    - lftp -e "cd $remote_path" -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_SERVER00 -e "mirror -v -R -p $publish_path $remote_path ; quit"
+  environment:
+    name: production
+
+
+publish:
+  stage: publish
+  tags:
+    - runner
+  variables:
+    remote_path: "Nuget/Packages"
+  only:
+    refs:
+      - master
+    changes:
+      - templates/**/*
+
+  script:
+    - "dotnet pack -c Release -p:PackageVersion=7.0.$CI_PIPELINE_IID"
+    - "rm -r $publish_path/nets*"
+    - "apt-get update -qq && apt-get install -y -qq lftp"
+    - lftp -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST_BLACK010 -e "mirror -v -R -p $publish_path $remote_path ; quit"
+
+  environment:
+    name: production
+    url: http://nuget.herval.com.br/

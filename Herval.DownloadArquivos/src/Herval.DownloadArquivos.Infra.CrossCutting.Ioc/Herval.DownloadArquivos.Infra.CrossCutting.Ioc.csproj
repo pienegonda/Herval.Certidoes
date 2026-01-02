@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Oracle" Version="9.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="9.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="9.0.0" />
+    <PackageReference Include="Herval.Graylog" Version="5.0.116" />
+    <PackageReference Include="Herval.Mediator" Version="1.0.32" />
+    <PackageReference Include="Herval.Http" Version="2.0.41" />
+    <PackageReference Include="Herval.Notifications" Version="1.0.83" />
+    <PackageReference Include="Herval.Web" Version="7.0.195" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Herval.DownloadArquivos.Domain\Herval.DownloadArquivos.Domain.csproj" />
+    <ProjectReference Include="..\Herval.DownloadArquivos.Infra.CrossCutting\Herval.DownloadArquivos.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Herval.DownloadArquivos.Infra.Data\Herval.DownloadArquivos.Infra.Data.csproj" />
+  </ItemGroup>
+  
+</Project>

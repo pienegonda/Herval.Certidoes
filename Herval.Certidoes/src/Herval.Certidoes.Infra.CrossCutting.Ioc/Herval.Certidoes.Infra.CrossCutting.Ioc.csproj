@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Herval.Certidoes.Infra.CrossCutting\Herval.Certidoes.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\Herval.Certidoes.Domain\Herval.Certidoes.Domain.csproj" />
+    <ProjectReference Include="..\Herval.Certidoes.Infra.Data\Herval.Certidoes.Infra.Data.csproj" />
+    <ProjectReference Include="..\Herval.Certidoes.Infra.ExternalServices.FeitosTrabalhistas\Herval.Certidoes.Infra.ExternalServices.FeitosTrabalhistas.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+</Project>
