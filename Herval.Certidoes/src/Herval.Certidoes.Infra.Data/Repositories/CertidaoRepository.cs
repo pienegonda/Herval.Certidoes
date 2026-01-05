@@ -24,7 +24,8 @@ namespace Herval.Certidoes.Infra.Data.Repositories
                 SELECT 
                     Documento AS {nameof(Certidao.Documento)},
                     SiteId    AS {nameof(Certidao.SiteId)},
-                    Link      AS {nameof(Certidao.Link)}
+                    Link      AS {nameof(Certidao.Link)},
+                    CAMINHO_ARQUIVO AS {nameof(Certidao.CaminhoArquivo)}
                 FROM Certidoes";
 
             return await connection.QueryAsync<Certidao>(query);

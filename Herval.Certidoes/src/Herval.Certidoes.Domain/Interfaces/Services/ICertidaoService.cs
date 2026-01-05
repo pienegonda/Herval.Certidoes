@@ -5,6 +5,6 @@ namespace Herval.Certidoes.Domain.Interfaces.Services
 {
     public interface ICertidaoService
     {
-        Task<bool> BaixarFeitosTrabalhistas(Certidao certidao);
+        bool BaixarFeitosTrabalhistas(Certidao certidao);
     }
 }

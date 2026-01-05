@@ -15,12 +15,12 @@ namespace Herval.Certidoes.Domain.Services
             _feitosTrabalhistasService = feitosTrabalhistasService;
         }
 
-        public async Task<bool> BaixarFeitosTrabalhistas(Certidao certidao)
+        public bool BaixarFeitosTrabalhistas(Certidao certidao)
         {
             switch (certidao.SiteId)
             {
                 case ECertidaoId.FeitosTrabalhistas:
-                    return await _feitosTrabalhistasService.BaixarFeitosTrabalhistas(certidao);       
+                    return _feitosTrabalhistasService.BaixarFeitosTrabalhistas(certidao);       
 
                 default:
                     throw new NotImplementedException($"O serviço para o site {certidao.SiteId} não está implementado.");

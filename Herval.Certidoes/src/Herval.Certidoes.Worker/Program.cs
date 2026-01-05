@@ -14,24 +14,18 @@ IHost host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((hostContext, services) =>
     {
-        // Infra / Services / Repositories
         services.AddServices();
-
-        // MediatR → aponta para o assembly onde estão os Commands / Handlers
+        services.AddHttpClient();
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(
                 typeof(BaixarCertidaoCommand).Assembly
             ));
 
         services.AddSettings();
-
         services.AddLogging(config =>
             config.AddConsole()
         );
-
         services.AddHostedService<Worker>();
-
-        // Argumentos de linha de comando
         services.AddSingleton(args);
     })
     .Build();

@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Pienelherme.RPA.Sdk" Version="1.0.1" />
+    <PackageReference Include="Pienelherme.RPA.Sdk" Version="1.0.4" />
   </ItemGroup>
 
   <PropertyGroup>

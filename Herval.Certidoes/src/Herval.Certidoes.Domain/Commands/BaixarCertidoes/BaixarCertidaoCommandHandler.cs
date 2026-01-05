@@ -2,7 +2,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Herval.Certidoes.Domain.Interfaces.Repositories;
 using Herval.Certidoes.Domain.Interfaces.Services;
+using Herval.RPA.Sdk.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Herval.Certidoes.Domain.Commands.BaixarCertidoes
 {
@@ -11,15 +13,21 @@ namespace Herval.Certidoes.Domain.Commands.BaixarCertidoes
         private readonly ICertidaoRepository _certidaoRepository;
         private readonly IMediator _mediator;
         private readonly ICertidaoService _certidaoService;
+        private readonly ILogger<BaixarCertidaoCommandHandler> _logger;
+        private readonly IPdfService _pdfService;
 
         public BaixarCertidaoCommandHandler(
             ICertidaoRepository certidaoRepository, 
             IMediator mediator, 
-            ICertidaoService certidaoService)
+            ICertidaoService certidaoService,
+            ILogger<BaixarCertidaoCommandHandler> logger,
+            IPdfService pdfService)
         {
             _certidaoRepository = certidaoRepository;
             _mediator = mediator;
             _certidaoService = certidaoService;
+            _logger = logger;
+            _pdfService = pdfService;
         }
 
         public async Task<Unit> Handle(BaixarCertidaoCommand request, CancellationToken cancellationToken)
@@ -31,7 +39,15 @@ namespace Herval.Certidoes.Domain.Commands.BaixarCertidoes
 
             foreach (var certidao in certidoes)
             {
-                var certidaoBiaxada = await _certidaoService.BaixarFeitosTrabalhistas(certidao);
+                var certidaoBiaxada = _certidaoService.BaixarFeitosTrabalhistas(certidao);
+                if (!certidaoBiaxada)
+                {
+                    _logger.LogWarning($"Falha ao baixar a certidao referente ao documento: {certidao.Documento}");
+                    continue;
+                }
+                
+
+
                 
             }
             

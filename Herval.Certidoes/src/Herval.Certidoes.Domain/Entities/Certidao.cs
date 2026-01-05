@@ -11,5 +11,6 @@ namespace Herval.Certidoes.Domain.Entities
         public string Documento { get; private set; }
         public ECertidaoId SiteId { get; private set; }
         public string Link { get; private set; }
+        public string CaminhoArquivo { get; private set; }
     }
 }

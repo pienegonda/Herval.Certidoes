@@ -29,6 +29,8 @@ namespace Herval.Certidoes.Infra.CrossCutting.Ioc
 
             // SDK Services
             services.AddScoped<IWebService, WebService>();
+            services.AddScoped<ICaptchaService, CaptchaService>();
+            services.AddScoped<IPdfService, PdfService>();
         }
     }
 }

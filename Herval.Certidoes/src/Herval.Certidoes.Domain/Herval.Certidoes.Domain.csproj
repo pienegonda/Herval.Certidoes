@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="14.0.0" />
-    <PackageReference Include="Pienelherme.RPA.Sdk" Version="1.0.0" />
+    <PackageReference Include="Pienelherme.RPA.Sdk" Version="1.0.4" />
   </ItemGroup>
 
 </Project>
