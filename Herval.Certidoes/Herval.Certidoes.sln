@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herval.Certidoes.Worker", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herval.Certidoes.Infra.ExternalServices.FeitosTrabalhistas", "src\Herval.Certidoes.Infra.ExternalServices.FeitosTrabalhistas\Herval.Certidoes.Infra.ExternalServices.FeitosTrabalhistas.csproj", "{EDF0327A-591E-434F-9C37-10A1C034A1CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Herval.Certidoes.Infra.ExternalServices.DebitosReceitaFederal", "src\Herval.Certidoes.Infra.ExternalServices.DebitosReceitaFederal\Herval.Certidoes.Infra.ExternalServices.DebitosReceitaFederal.csproj", "{973FA1BF-E419-4902-A288-0C6BE82F6433}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,18 +99,6 @@ Global
 		{EDF0327A-591E-434F-9C37-10A1C034A1CF}.Release|x64.Build.0 = Release|Any CPU
 		{EDF0327A-591E-434F-9C37-10A1C034A1CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{EDF0327A-591E-434F-9C37-10A1C034A1CF}.Release|x86.Build.0 = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|x64.Build.0 = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Debug|x86.Build.0 = Debug|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|Any CPU.Build.0 = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|x64.ActiveCfg = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|x64.Build.0 = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|x86.ActiveCfg = Release|Any CPU
-		{973FA1BF-E419-4902-A288-0C6BE82F6433}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +110,5 @@ Global
 		{293E637C-9D09-4CD9-AAFA-FD78E0304140} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{FB31164D-1949-4E5E-B17C-A0F2608AE9D7} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{EDF0327A-591E-434F-9C37-10A1C034A1CF} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{973FA1BF-E419-4902-A288-0C6BE82F6433} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

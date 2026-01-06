@@ -30,5 +30,29 @@ namespace Herval.Certidoes.Infra.Data.Repositories
 
             return await connection.QueryAsync<Certidao>(query);
         }
+
+        public async Task InserirCertidaoAsync(Certidao certidao)
+        {
+            var connection = _dbcontext.Connection;
+
+            var query = $@"
+                INSERT INTO Certidoes (
+                    {nameof(Certidao.Documento)},
+                    {nameof(Certidao.SiteId)},
+                    {nameof(Certidao.Link)},
+                    {nameof(Certidao.CaminhoArquivo)},
+                    {nameof(Certidao.NomeArquivo)}
+                )
+                VALUES (
+                    @{nameof(Certidao.Documento)},
+                    @{nameof(Certidao.SiteId)},
+                    @{nameof(Certidao.Link)},
+                    @{nameof(Certidao.CaminhoArquivo)},
+                    @{nameof(Certidao.NomeArquivo)}
+                );
+                SELECT CAST(SCOPE_IDENTITY() as int);";
+
+            await connection.QuerySingleAsync<int>(query, certidao);
+        }
     }
 }

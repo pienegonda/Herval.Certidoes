@@ -12,5 +12,11 @@ namespace Herval.Certidoes.Domain.Entities
         public ECertidaoId SiteId { get; private set; }
         public string Link { get; private set; }
         public string CaminhoArquivo { get; private set; }
+        public string NomeArquivo { get; private set; }
+
+        public void AtribuirNomeArquivo()
+        {
+            NomeArquivo = $"{Documento}_Certidao_{SiteId.ToString()}.pdf";
+        }
     }
 }

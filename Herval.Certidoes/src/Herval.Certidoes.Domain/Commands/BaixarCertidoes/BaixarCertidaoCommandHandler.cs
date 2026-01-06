@@ -46,9 +46,11 @@ namespace Herval.Certidoes.Domain.Commands.BaixarCertidoes
                     continue;
                 }
                 
+                certidao.AtribuirNomeArquivo();
 
-
+                var constaPrecedentes = _pdfService.PdfContemTexto(certidao.NomeArquivo, "NÃO CONSTAM");
                 
+                await _certidaoRepository.InserirCertidaoAsync(certidao);
             }
             
 
